@@ -43,7 +43,7 @@ function getPasswordStrength(password) {
 		countStrength++;
 	}
 
-	if (countStrength < 3) {
+	if (countStrength < 3 || password.length < 8) {
 		return "Weak password";
 	}
 	if (countStrength == 3) {
