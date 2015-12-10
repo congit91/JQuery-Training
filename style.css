@@ -2,3 +2,9 @@ input[type='password'] {
   border-radius: 5%;
   height: 25px;
 }
+.pwd-process-bar {
+	margin-left: 5px;
+    margin-bottom: -4px;
+    width: 250px;
+    display: inline-block;
+}
