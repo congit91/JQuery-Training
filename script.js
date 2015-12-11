@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$('#password').convertToPasswordField();
+  $('#re-password').convertToPasswordField();
 });
 
 (function($){
@@ -7,21 +8,31 @@ $(document).ready(function() {
       	$(this).attr("type", "password");
 	    var feedback = $(this).attr("feedback");
 	    if(feedback) {
-      		$(this).bind('input propertychange', function() {
-      			var password = $(this).val();
-      			var strengthOfPassword = getPasswordStrength(password);
-      			if (isNaN(strengthOfPassword)) {
-      				removeProgessBarInformPasswordStrength();
-      				$(this).tooltip('enable');
-      				$(this).attr('title', strengthOfPassword).tooltip('fixTitle').tooltip('show');
-      			} else {
-      				$(this).attr('title', strengthOfPassword).tooltip('fixTitle').tooltip('hide');
-      				$(this).tooltip('disable');
-      				removeProgessBarInformPasswordStrength();
-      				addProgessBarInformPasswordStrength($(this), strengthOfPassword);
-      			}
-    		});
-      	}
+    		$(this).bind('input propertychange', function() {
+    			var password = $(this).val();
+    			var strengthOfPassword = getPasswordStrength(password);
+    			if (isNaN(strengthOfPassword)) {
+    				removeProgessBarInformPasswordStrength();
+    				$(this).tooltip('enable');
+    				$(this).attr('title', strengthOfPassword).tooltip('fixTitle').tooltip('show');
+    			} else {
+    				$(this).attr('title', strengthOfPassword).tooltip('fixTitle').tooltip('hide');
+    				$(this).tooltip('disable');
+    				removeProgessBarInformPasswordStrength();
+    				addProgessBarInformPasswordStrength($(this), strengthOfPassword);
+    			}
+  		  });
+      }
+      var passwordMatchId = $(this).attr("match");
+      if (passwordMatchId != null && passwordMatchId != undefined) {
+        var messagePasswordMatch;
+
+        $(this).bind('input propertychange', function() {
+
+          messagePasswordMatch = getMessagePasswordMatch($(this), passwordMatchId);
+          $(this).attr('title', messagePasswordMatch).tooltip('fixTitle').tooltip('show');
+        });
+      }
    	}; 
 })( jQuery );
 
@@ -91,6 +102,19 @@ function getPasswordStrength(password) {
 	}
 
 	return countStrength;
+}
+
+function getMessagePasswordMatch(id, passwordMatchId) {
+  var passwordVal = $('#'+ passwordMatchId).val();
+  var rePasswordVal = id.val();
+  if (passwordVal == rePasswordVal) {
+    id.removeClass("red-tooltip");
+    id.addClass("blue-tooltip");
+    return "Re-password is match with password";
+  } 
+  id.removeClass("blue-tooltip");
+  id.addClass("red-tooltip");
+  return "Re-password isn't match with password";  
 }
 
 function isPasswordWeak(strengthValue) {

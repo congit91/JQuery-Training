@@ -8,3 +8,15 @@ input[type='password'] {
     width: 250px;
     display: inline-block;
 }
+label{
+	width: 110px;
+}
+div.tooltip-inner {
+    max-width: none;
+    white-space: nowrap;
+}
+
+.red-tooltip + .tooltip > .tooltip-inner {background-color: red;}
+.red-tooltip + .tooltip > .tooltip-arrow { border-bottom-color: red;}
+.blue-tooltip + .tooltip > .tooltip-inner {background-color: blue;}
+.blue-tooltip + .tooltip > .tooltip-arrow {border-bottom-color: blue;}
